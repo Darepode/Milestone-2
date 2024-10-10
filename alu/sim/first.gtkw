@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Thu Sep 26 06:22:35 2024
+[*]
+[dumpfile] "/home/datpham/CTMT/Single_Cycle/sim/alu_tb.vcd"
+[dumpfile_mtime] "Thu Sep 26 06:16:16 2024"
+[dumpfile_size] 81765
+[savefile] "/home/datpham/CTMT/Single_Cycle/sim/first.gtkw"
+[timestart] 0
+[size] 1920 985
+[pos] -27 -24
+*-14.400000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] alu_tb.
+[sst_width] 297
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 292
+@420
+alu_tb.inst_alu.operand_a[31:0]
+alu_tb.inst_alu.operand_b[31:0]
+@22
+alu_tb.inst_alu.alu_op[3:0]
+@25
+alu_tb.inst_alu.alu_data[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
