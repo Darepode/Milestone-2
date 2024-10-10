@@ -1,0 +1,6 @@
+add4/sim/adder_tb.vcd
+add4/sim/adder_tb.vvp
+add4/sim/result.log
+alu/sim/alu_tb.vvp
+alu/sim/alu_tb.vcd
+alu/sim/result.log
