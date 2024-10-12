@@ -10,7 +10,7 @@ module singlecycle (
     output logic [6:0] o_io_hex0, o_io_hex1, o_io_hex2, o_io_hex3, o_io_hex4, o_io_hex5, o_io_hex6, o_io_hex7,   // Output for driving 7-segment LED displays
     output logic [31:0] o_io_lcd,   // Output for driving the LCD register
 );
-hellow
+
 
 
 endmodule
