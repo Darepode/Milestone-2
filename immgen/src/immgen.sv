@@ -1,6 +1,6 @@
 module immgen (
-	input [31:0] Instruction_i,
-    output reg [31:0] Immediate_o	
+	input [31:0] instruction_i,
+    output reg [31:0] immediate_o	
 );
 
 
@@ -15,21 +15,21 @@ parameter  R_type      = 5'b01100,
 
 //wire opcode [4:0];
 
-//assign opode = Instruction_i[6:2];
+//assign opode = instruction_i[6:2];
 
 always @(*) begin
-	case (Instruction_i[6:2])
-		R_type      : Immediate_o = 32'h00000000;
+	case (instruction_i[6:2])
+		R_type      : immediate_o = 32'h00000000;
 
-		I_type_LD   : Immediate_o = { {20{Instruction_i[31]}}, Instruction_i[31:20] };
-		I_type_IMM  : Immediate_o = { {20{Instruction_i[31]}}, Instruction_i[31:20] };
-		I_type_JALR : Immediate_o = { {20{Instruction_i[31]}}, Instruction_i[31:20] };
+		I_type_LD   : immediate_o = { {20{instruction_i[31]}}, instruction_i[31:20] };
+		I_type_IMM  : immediate_o = { {20{instruction_i[31]}}, instruction_i[31:20] };
+		I_type_JALR : immediate_o = { {20{instruction_i[31]}}, instruction_i[31:20] };
 
-		S_type      : Immediate_o = { {20{Instruction_i[31]}}, Instruction_i[31:25], Instruction_i[11:7] };
-		B_type      : Immediate_o = { {20{Instruction_i[31]}}, Instruction_i[7], Instruction_i[30:25], Instruction_i[11:8], 1'b0 };
-		U_type      : Immediate_o = { Instruction_i[31:12], 12'b000000000000 };
-		J_type      : Immediate_o = { {11{Instruction_i[31]}}, Instruction_i[31], Instruction_i[19:12], Instruction_i[20], Instruction_i[30:21], 1'b0 };	
-		default     : Immediate_o = 32'h00000000;
+		S_type      : immediate_o = { {20{instruction_i[31]}}, instruction_i[31:25], instruction_i[11:7] };
+		B_type      : immediate_o = { {20{instruction_i[31]}}, instruction_i[7], instruction_i[30:25], instruction_i[11:8], 1'b0 };
+		U_type      : immediate_o = { instruction_i[31:12], 12'b000000000000 };
+		J_type      : immediate_o = { {11{instruction_i[31]}}, instruction_i[31], instruction_i[19:12], instruction_i[20], instruction_i[30:21], 1'b0 };	
+		default     : immediate_o = 32'h00000000;
 	endcase
 
 end
