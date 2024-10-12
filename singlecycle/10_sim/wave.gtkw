@@ -1,0 +1,66 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sat Oct 12 07:09:24 2024
+[*]
+[dumpfile] "/home/datpham/CTMT/Milestone2/singlecycle/10_sim/singlecycle_tb.vcd"
+[dumpfile_mtime] "Sat Oct 12 07:02:58 2024"
+[dumpfile_size] 9952
+[savefile] "/home/datpham/CTMT/Milestone2/singlecycle/10_sim/wave.gtkw"
+[timestart] 0
+[size] 1920 985
+[pos] -27 -24
+*-13.723104 12300 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] singlecycle_tb.
+[treeopen] singlecycle_tb.singlecycle_inst.
+[sst_width] 297
+[signals_width] 239
+[sst_expanded] 1
+[sst_vpaned_height] 292
+@28
+singlecycle_tb.i_clk
+singlecycle_tb.i_rst_n
+@22
+singlecycle_tb.reg0[31:0]
+singlecycle_tb.reg1[31:0]
+singlecycle_tb.reg2[31:0]
+singlecycle_tb.reg3[31:0]
+singlecycle_tb.reg4[31:0]
+singlecycle_tb.reg5[31:0]
+singlecycle_tb.reg6[31:0]
+singlecycle_tb.reg7[31:0]
+singlecycle_tb.reg8[31:0]
+singlecycle_tb.reg9[31:0]
+singlecycle_tb.reg10[31:0]
+singlecycle_tb.reg11[31:0]
+singlecycle_tb.reg12[31:0]
+singlecycle_tb.reg13[31:0]
+singlecycle_tb.reg14[31:0]
+singlecycle_tb.reg15[31:0]
+singlecycle_tb.reg16[31:0]
+singlecycle_tb.reg17[31:0]
+singlecycle_tb.reg18[31:0]
+singlecycle_tb.reg19[31:0]
+singlecycle_tb.reg20[31:0]
+singlecycle_tb.reg21[31:0]
+singlecycle_tb.reg22[31:0]
+singlecycle_tb.reg23[31:0]
+singlecycle_tb.reg24[31:0]
+singlecycle_tb.reg25[31:0]
+singlecycle_tb.reg26[31:0]
+singlecycle_tb.reg27[31:0]
+singlecycle_tb.reg28[31:0]
+singlecycle_tb.reg29[31:0]
+singlecycle_tb.reg30[31:0]
+singlecycle_tb.reg31[31:0]
+singlecycle_tb.singlecycle_inst.immgen_inst.immediate_o[31:0]
+singlecycle_tb.singlecycle_inst.PC_reg[31:0]
+@29
+singlecycle_tb.singlecycle_inst.pc_sel
+@22
+singlecycle_tb.singlecycle_inst.adder4_inst.adder_data[31:0]
+singlecycle_tb.singlecycle_inst.adder4_inst.operand_a[31:0]
+singlecycle_tb.singlecycle_inst.adder4_inst.operand_b[31:0]
+singlecycle_tb.singlecycle_inst.pc_four[31:0]
+singlecycle_tb.singlecycle_inst.pc_next[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

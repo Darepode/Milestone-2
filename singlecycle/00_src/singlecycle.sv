@@ -12,16 +12,16 @@ module singlecycle (
 );
 
 reg  [31:0] PC_reg;
-wire [31:0] pc, pc_next, pc_four, instr, wb_data, rs1_data, rs2_data, operand_a, operand_b, immediate, alu_data, ld_data, io_btn, io_sw;
+wire [31:0] pc_next, pc_four, instr, wb_data, rs1_data, rs2_data, operand_a, operand_b, immediate, alu_data, ld_data, io_btn, io_sw;
 wire [0:0]  pc_sel, rd_wren, insn_vld, br_un, br_less, br_equal, opa_sel, opb_sel, mem_wren, l_unsigned;
 wire [1:0]  wb_sel, s_length;
 wire [2:0]  l_length;
 wire [3:0]  alu_op;
 
 assign pc_next   = (!pc_sel)  ? pc_four  : wb_data;
-assign operand_a = (!opa_sel) ? rs1_data : pc;
+assign operand_a = (!opa_sel) ? rs1_data : PC_reg;
 assign operand_b = (!opb_sel) ? rs2_data : immediate;
-assign wb_data   = (!wb_sel)  ? ld_data  : (wb_sel == 2'b01) ? alu_data : pc_four;
+assign wb_data   = (!wb_sel)  ? alu_data : (wb_sel == 2'b01) ? ld_data: pc_four;
 
 always@( posedge i_clk or negedge i_rst_n) begin
     if (!i_rst_n) begin
@@ -31,19 +31,19 @@ always@( posedge i_clk or negedge i_rst_n) begin
     end
     else begin
         PC_reg <= pc_next;
-        o_pc_debug <= pc;
+        o_pc_debug <= PC_reg;
         o_insn_vld <= insn_vld;
     end
 end
 
 adder adder4_inst (
-    .operand_a  (pc),    
+    .operand_a  (PC_reg),    
     .operand_b  (32'h4),    
     .adder_data (pc_four)     
 );
 
 imem imem_inst (
-    .i_addr (pc),
+    .i_addr (PC_reg),
     .o_data (instr)
 );
 
@@ -109,7 +109,7 @@ ctrl_unit ctrl_unit_inst (
     .br_less     (br_less),    
     .br_equal    (br_equal), 
     .l_length    (l_length),   
-    .br_sel      (br_sel),    
+    .br_sel      (pc_sel),    
     .br_unsigned (br_un),    
     .rd_wren     (rd_wren),    
     .mem_wren    (mem_wren),    

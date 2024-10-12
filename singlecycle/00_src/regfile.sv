@@ -14,11 +14,10 @@ module regfile (
             for (integer i = 0; i < 32; i++) begin
                 register[i] = '0;
             end
-            $writememh("regfile.data", register);
-        end
-        if (rd_wren && rd_addr) register[rd_addr] = rd_data;
+            //$writememh("regfile.data", register);
+        end else if (rd_wren && rd_addr) register[rd_addr] = rd_data;
         else register[rd_addr] = '0;
-        $writememh("regfile.data", register);
+        //$writememh("regfile.data", register);
     end
 
 // Read operation
