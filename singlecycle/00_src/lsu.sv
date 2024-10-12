@@ -2,8 +2,7 @@ module lsu (
     input             i_clk, i_rst_n, i_lsu_wren, i_l_unsigned,
     input  [1:0]      i_s_length, 
     input  [2:0]      i_l_length,
-    input  [11:0]     i_lsu_addr,
-    input  [31:0]     i_st_data, i_io_sw, i_io_btn,
+    input  [31:0]     i_st_data, i_io_sw, i_io_btn, i_lsu_addr,
     output reg [31:0] o_ld_data, o_io_lcd, o_io_ledg, o_io_ledr,
                        
     output reg [6:0]  o_io_hex0, o_io_hex1, o_io_hex2, o_io_hex3,
@@ -70,8 +69,8 @@ module lsu (
             endcase
         end else begin
             case(i_l_length)
-                3'b000:  o_ld_data = {24{ld_temp_data[7]}, ld_temp_data[7:0]};
-                3'b001:  o_ld_data = {16{ld_temp_data[15]}, ld_temp_data[15:0]};
+                3'b000:  o_ld_data = {{24{ld_temp_data[7]}}, ld_temp_data[7:0]};
+                3'b001:  o_ld_data = {{16{ld_temp_data[15]}}, ld_temp_data[15:0]};
                 3'b010:  o_ld_data = ld_temp_data;
                 default: o_ld_data = 32'b0011001100110011; //debugging
             endcase
@@ -82,7 +81,7 @@ module lsu (
     // Load-Store for data_mem
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (integer i = 0; i < 8192, i = i+1) data_mem[i] <= 8'h00;
+            for (integer i = 0; i < 8192; i = i+1) data_mem[i] <= 8'h00;
         end else begin
             if (cs[0] & i_lsu_wren) begin
                 // Store word 
@@ -102,7 +101,7 @@ module lsu (
     // Load-Store for output_mem
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (integer i = 0; i < 64, i = i+1) output_mem[i] <= 8'h00;
+            for (integer i = 0; i < 64; i = i+1) output_mem[i] <= 8'h00;
         end else begin
             if (cs[1] & i_lsu_wren) begin
                 // Store word 
@@ -121,9 +120,9 @@ module lsu (
     // Load-Store for input_mem
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (integer i = 0; i < 32, i = i+1) input_mem[i] <= 8'h00;
+            for (integer i = 0; i < 32; i = i+1) input_mem[i] <= 8'h00;
         end else begin
-            {input_mem[5'b0_0000+5'h3], input_mem[5'b0_0000+5'h2], input_mem[5'b0_0000+5'h1], input_mem[5'b0_0000]}; <= assign i_io_sw;
+            {input_mem[5'b0_0000+5'h3], input_mem[5'b0_0000+5'h2], input_mem[5'b0_0000+5'h1], input_mem[5'b0_0000]} <= i_io_sw;
             input_mem[5'b1_0000] <= {4'b0, i_io_btn};
         end
     end

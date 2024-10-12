@@ -1,0 +1,10 @@
+module imem (
+    input  logic [31:0] i_addr,
+    output logic [31:0] o_data
+);
+
+reg [7:0] instr_mem [0:8191];
+
+assign o_data = instr_mem[i_addr];
+
+endmodule

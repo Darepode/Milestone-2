@@ -4,3 +4,5 @@ add4/sim/result.log
 alu/sim/alu_tb.vvp
 alu/sim/alu_tb.vcd
 alu/sim/result.log
+singlecycle/10_sim/singlecycle_tb.vvp
+singlecycle/10_sim/singlecycle_tb.vcd
