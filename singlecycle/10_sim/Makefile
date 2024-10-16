@@ -14,4 +14,4 @@ hex:
 	riscv32-unknown-elf-objcopy -O verilog ../02_test/test_assembly.o ../02_test/test_in.hex
 
 run:
-	make comp && make sim 
+	make hex && make comp && make sim

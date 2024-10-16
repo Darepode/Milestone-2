@@ -51,6 +51,50 @@ _start:
     beq x1, x1, label_eq    # Should branch (15 == 15)
     li x31, 0xDEADBEE1      # Should be skipped
 label_eq:
+    li x20, 0x7FFFFFFF      # Data 
+    li x21, 0x00002000      # Data Memory Address 
+    sw x20, 0(x21)
+
+    li x20, 0x0000AAAA
+    sh x20, 4(x21)
+    sb x20, 8(x21)
+
+    li x20, 0x7770FFFF      # 16bit & 8bit negative
+    sw x20, 12(x21)
+    lw x22, 12(x21)         # Load halfword
+    lh x23, 12(x21)
+    lb x24, 12(x21)
+
+    li x20, 0x1111AAAA
+    sw x20, 16(x21)
+    lhu x25, 16(x21)
+    lbu x26, 16(x21) 
+
+    li x21, 0x00007000
+    li x20, 0xA0A0A0A0
+    sw x20, 0(x21)
+    sh x20, 8(x21)
+    sb x20, 16(x21)
+
+    li x21, 0x00007020       # Drive HEX0
+    li x20, 0xA0A0A0A0
+    sb x20, 0(x21)
+
+    li x21, 0x00007020       # Drive HEX1
+    li x20, 0x0000007C
+    sb x20, 1(x21)
+
+    li x21, 0x00007020       # Drive HEX2
+    li x20, 0xA0A0005E
+    sb x20, 2(x21)
+
+    li x21, 0x00007020       # Drive HEX3
+    li x20, 0x1234008B
+    sb x20, 3(x21)
+
+
+    sb x20, 18(x21)
+
     li x31, 0x0C0FFEE1      # Target of BEQ
 
     # BNE (Branch if Not Equal)
@@ -78,7 +122,8 @@ label_jump:
     li x31, 0x0C0FFEE5                     # Target of JAL
 
     # JALR (Jump and Link Register)
-    jalr x30, 0(x1)         # Jump to the address in x1 (which contains 15), save return address in x30
+    la x1, end_of_test
+    jalr x30, x1, 0         # Jump to the address in x1 (which contains 15), save return address in x30
     li x31, 0xDEADBEE6      # Should be skipped
 
     # End of test

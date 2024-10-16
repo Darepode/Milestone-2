@@ -9,16 +9,19 @@ module lsu (
                       o_io_hex4, o_io_hex5, o_io_hex6, o_io_hex7
 );
 
-    reg [2:0] cs;
-    wire [31:0] data_mem_out, output_mem_out, input_mem_out;
+    reg  [2:0]  cs;
     reg  [31:0] ld_temp_data;
+    wire [12:0] data_mem_addr;
+    wire [4:0]  input_mem_addr;
+    wire [5:0]  output_mem_addr;
+    wire [31:0] data_mem_out, output_mem_out, input_mem_out;
 
     // Declare memory space
     reg [7:0] data_mem[0:8191];
     reg [7:0] input_mem[0:31];
     reg [7:0] output_mem[0:63];
 
-    assign data_mem_addr   = i_lsu_addr[12:0];
+    assign data_mem_addr   = i_lsu_addr[12:0]; 
     assign input_mem_addr  = i_lsu_addr[4:0];
     assign output_mem_addr = i_lsu_addr[5:0];
 
@@ -64,14 +67,14 @@ module lsu (
         if(i_l_unsigned) begin
             case(i_l_length)
                 3'b100:  o_ld_data = {24'b0, ld_temp_data[7:0]};
-                3'b101:  o_ld_data = {16'b0, ld_temp_data[15:0]};
+                3'b101:  o_ld_data = {16'b0, ld_temp_data[15:0]}; 
                 default: o_ld_data = 32'b1111000011110000; //for debugging
             endcase
         end else begin
             case(i_l_length)
                 3'b000:  o_ld_data = {{24{ld_temp_data[7]}}, ld_temp_data[7:0]};
                 3'b001:  o_ld_data = {{16{ld_temp_data[15]}}, ld_temp_data[15:0]};
-                3'b010:  o_ld_data = ld_temp_data;
+                3'b010:  o_ld_data = ld_temp_data; 
                 default: o_ld_data = 32'b0011001100110011; //debugging
             endcase
         end
@@ -89,7 +92,7 @@ module lsu (
                 //Store half-word
                 else if (i_s_length == 2'b01) {data_mem[data_mem_addr+13'h1], data_mem[data_mem_addr]} <= i_st_data[15:0];
                 //Store byte
-                else if (i_s_length == 2'b00) data_mem[data_mem_addr] <= i_st_data[7:0];
+                else if (i_s_length == 2'b00) data_mem[data_mem_addr] <= i_st_data[7:0]; 
             end
         end
     end
@@ -105,11 +108,11 @@ module lsu (
         end else begin
             if (cs[1] & i_lsu_wren) begin
                 // Store word 
-                if (i_s_length == 2'b10) {output_mem[output_mem_addr+6'h3], output_mem[output_mem_addr+6'h2], output_mem[output_mem_addr+6'h1], data_mem[data_mem_addr]} <= i_st_data;
+                if (i_s_length == 2'b10) {output_mem[output_mem_addr+6'h3], output_mem[output_mem_addr+6'h2], output_mem[output_mem_addr+6'h1], output_mem[output_mem_addr]} <= i_st_data;
                 //Store half-word
                 else if (i_s_length == 2'b01) {output_mem[output_mem_addr+6'h1], output_mem[output_mem_addr]} <= i_st_data[15:0];
                 //Store byte
-                else if (i_s_length == 2'b00) output_mem[output_mem_addr] <= i_st_data[7:0];
+                else if (i_s_length == 2'b00) output_mem[output_mem_addr] <= i_st_data[7:0]; 
             end
         end
     end

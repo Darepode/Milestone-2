@@ -52,11 +52,11 @@ always @(*) begin
 					  endcase
 		end
 		I_type_JALR : begin
-			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b10;
+			          br_sel = 1'b1; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b10;
 					  alu_op = 4'b0000; l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
 		end
 		I_type_LD   : begin
-			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b01;
+			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b01;
 					  alu_op = 4'b0000; s_length = 2'b0; l_length = func3; insn_vld = 1'b0;
 					  if (func3 == 3'b100 || func3 == 3'b101) l_unsigned = 1'b1;
 					  else l_unsigned = 1'b0;
