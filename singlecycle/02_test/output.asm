@@ -113,9 +113,9 @@ Disassembly of section .text:
 00000180 <label_jump>:
  180:	0c100fb7          	lui	t6,0xc100
  184:	ee5f8f93          	addi	t6,t6,-283 # c0ffee5 <end_of_test+0xc0ffd45>
- 188:	00000097          	auipc	ra,0x0
- 18c:	00008093          	mv	ra,ra
- 190:	00008f67          	jalr	t5,ra # 188 <label_jump+0x8>
+ 188:	00000117          	auipc	sp,0x0
+ 18c:	01410113          	addi	sp,sp,20 # 19c <label_jump+0x1c>
+ 190:	00010f67          	jalr	t5,sp
  194:	deadcfb7          	lui	t6,0xdeadc
  198:	ee6f8f93          	addi	t6,t6,-282 # deadbee6 <end_of_test+0xdeadbd46>
  19c:	0040006f          	j	1a0 <end_of_test>

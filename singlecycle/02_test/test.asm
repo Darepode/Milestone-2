@@ -51,6 +51,7 @@ _start:
     li x30, 0xC00FFEEE
     # Illegal instruction
     mul x30, x2, x3 
+    
 
     #####################################
     # Branch and Jump Instructions
@@ -131,8 +132,9 @@ label_jump:
     li x31, 0x0C0FFEE5                     # Target of JAL
 
     # JALR (Jump and Link Register)
-    la x1, end_of_test
-    jalr x30, x1, 0         # Jump to the address in x1 (which contains 15), save return address in x30
+    auipc x2, 0
+    addi x2, x2, 20
+    jalr x30, x2, 0         # Jump to the address in x1 (which contains 15), save return address in x30
     li x31, 0xDEADBEE6      # Should be skipped
 
     # End of test

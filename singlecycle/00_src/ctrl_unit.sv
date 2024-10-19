@@ -15,7 +15,7 @@ parameter  R_type       = 7'b0110011,
 	       S_type       = 7'b0100011,
 	       B_type       = 7'b1100011,
 	       U_type_LUI   = 7'b0110111,
-		   U_type_AUIPC = 7'b0110111,
+		   U_type_AUIPC = 7'b0010111,
 	       J_type       = 7'b1101111;
 
 assign func7 = instr[31:25];

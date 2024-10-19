@@ -23,7 +23,7 @@ assign operand_a = (!opa_sel) ? rs1_data : PC_reg;
 assign operand_b = (!opb_sel) ? rs2_data : immediate;
 assign wb_data   = (!wb_sel)  ? alu_data : (wb_sel == 2'b01) ? ld_data: pc_four;
 
-always@( posedge i_clk or negedge i_rst_n) begin
+always@( posedge i_clk) begin
     if (!i_rst_n) begin
         PC_reg <= 32'h00000000;
         o_pc_debug <= 32'h00000000;
