@@ -67,15 +67,39 @@ always @(*) begin
 					  else l_unsigned = 1'b0;
 		end
         B_type      : begin
-                      br_sel = 1'b1;  rd_wren = 1'b0; mem_wren = 1'b0; op_a_sel = 1'b1; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b0000;
+                      /*br_sel = 1'b1;*/  rd_wren = 1'b0; mem_wren = 1'b0; op_a_sel = 1'b1; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b0000;
 					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
                       case (func3)
-					    3'b000: br_unsigned = 1'b0;
-						3'b001: br_unsigned = 1'b0;
-						3'b100: br_unsigned = 1'b0;
-						3'b101: br_unsigned = 1'b0;
-						3'b110: br_unsigned = 1'b1;
-						3'b111: br_unsigned = 1'b1;
+					    3'b000: begin   // beq
+							br_unsigned = 1'b0;
+							if (br_equal & !br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
+						3'b001: begin  //bne
+							br_unsigned = 1'b0;
+							if (!br_equal & !br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
+						3'b100: begin   //blt
+							br_unsigned = 1'b0;
+							if (!br_equal & br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
+						3'b101: begin   //bge
+							br_unsigned = 1'b0;
+							if (!br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
+						3'b110: begin   //bltu
+							br_unsigned = 1'b1;
+							if (!br_equal & br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
+						3'b111: begin   //bgeu
+							br_unsigned = 1'b1;
+							if (!br_less) br_sel = 1'b1;
+							else br_sel = 1'b0;
+						end
 					  endcase  
 		end
 		S_type      : begin

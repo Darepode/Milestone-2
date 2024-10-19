@@ -145,7 +145,8 @@ singlecycle singlecycle_inst (
     $display("BEGIN init mem");
     $readmemh("../02_test/test_in.hex", singlecycle_tb.singlecycle_inst.imem_inst.instr_mem);
     $display("FINISH init mem");
-    #10; force singlecycle_tb.singlecycle_inst.lsu_inst.i_io_sw = 32'hDEADBEEF;
+    #10; force singlecycle_tb.singlecycle_inst.i_io_sw = 32'hDEADBEEF;
+    // #20; release singlecycle_tb.singlecycle_inst.i_io_sw;
     end
 
  
