@@ -27,21 +27,25 @@ _start:
     sub x11, x4, x2         # x11 = 255 - (-15) = 270
 
     # AND (Bitwise AND)
-    and x12, x1, x4         # x12 = 0x0F & 0xFF = 0x0F
+    andi x12, x1, 0xFF         # x12 = 0x0F & 0xFF = 0x0F
 
     # OR (Bitwise OR)
-    or x13, x1, x4          # x13 = 0x0F | 0xFF = 0xFF
+    ori x13, x1, 0xFF         # x13 = 0x0F | 0xFF = 0xFF
 
     # XOR (Bitwise XOR)
-    xor x14, x1, x4         # x14 = 0x0F ^ 0xFF = 0xF0
+    xori x14, x1, 0xFF         # x14 = 0x0F ^ 0xFF = 0xF0
 
     # SLT (Set less than, signed)
-    slt x15, x1, x3         # x15 = (15 < 16) = 1
-    slt x16, x3, x1         # x16 = (16 < 15) = 0
+    slti x15, x1, 16         # x15 = (15 < 16) = 1
+    slti x16, x3, 15         # x16 = (16 < 15) = 0
+    slti x16, x3, -1         # x16 = (16 < -1) = 0
+    li x3, -2
+    slti x16, x3, -1         # x16 = (-2 < -1) = 1
 
     # SLTU (Set less than, unsigned)
-    sltu x17, x1, x3        # x17 = (15 < 16) = 1
-    sltu x18, x5, x6        # x18 = (0x7FFFFFFF < 0x80000000) = 1 (unsigned comparison)
+    sltiu x17, x1, 16        # x17 = (15 < 16) = 1
+    li x5, 1
+    sltiu x18, x5, -2048       # x18 = (1 < 2048) = 1 (unsigned comparison)
 
     #####################################
     # Branch and Jump Instructions

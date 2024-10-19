@@ -9,3 +9,4 @@ singlecycle/10_sim/singlecycle_tb.vcd
 singlecycle/10_sim/Mem_after.data
 singlecycle/10_sim/In_Mem_after.data
 singlecycle/10_sim/Out_Mem_after.data
+verification
