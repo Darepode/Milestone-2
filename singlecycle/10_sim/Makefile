@@ -12,6 +12,7 @@ wave:
 hex:
 	riscv32-unknown-elf-as -o ../02_test/test_assembly.o ../02_test/test.asm
 	riscv32-unknown-elf-objcopy -O verilog ../02_test/test_assembly.o ../02_test/test_in.hex
+	riscv32-unknown-elf-objdump -d ../02_test/test_assembly.o > ../02_test/output.asm
 
 run:
 	make hex && make comp && make sim

@@ -47,6 +47,11 @@ _start:
     li x5, 1
     sltiu x18, x5, -2048       # x18 = (1 < 2048) = 1 (unsigned comparison)
 
+    li x1, 0x10101010
+    li x30, 0xC00FFEEE
+    # Illegal instruction
+    mul x30, x2, x3 
+
     #####################################
     # Branch and Jump Instructions
     #####################################

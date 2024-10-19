@@ -53,6 +53,8 @@ module singlecycle_tb ();
     logic [31:0] reg30;
     logic [31:0] reg31;
 
+    logic [6:0] type_instr;
+
     assign reg0  = singlecycle_inst.regfile_inst.register[0];
     assign reg1  = singlecycle_inst.regfile_inst.register[1];
     assign reg2  = singlecycle_inst.regfile_inst.register[2];
@@ -85,6 +87,10 @@ module singlecycle_tb ();
     assign reg29 = singlecycle_inst.regfile_inst.register[29];
     assign reg30 = singlecycle_inst.regfile_inst.register[30];
     assign reg31 = singlecycle_inst.regfile_inst.register[31];
+
+    assign type_instr = singlecycle_inst.ctrl_unit_inst.instr[6:0]; 
+
+
 
 
 singlecycle singlecycle_inst (

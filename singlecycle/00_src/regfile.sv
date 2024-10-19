@@ -12,11 +12,10 @@ module regfile (
     always @(posedge clk_i or negedge rst_ni) begin
         if (!rst_ni) begin
             for (integer i = 0; i < 32; i++) begin
-                register[i] = '0;
+                register[i] <= '0;
             end
             //$writememh("regfile.data", register);
-        end else if (rd_wren && rd_addr) register[rd_addr] = rd_data;
-        else register[rd_addr] = '0;
+        end else if (rd_wren && rd_addr) register[rd_addr] <= rd_data;
         //$writememh("regfile.data", register);
     end
 
