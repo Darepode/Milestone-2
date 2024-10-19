@@ -2,20 +2,155 @@
     .globl _start
 
 _start:
-li x4, 0x7000
-li x2, 0xAAAAAAAA
-li x3, 0x55555555
+
+li x2, 0x7020
+li x11, 16
+
 here:
-mv x6,x2
-sw x6, 0(x4)
-jal x1, delay_1s
-mv x6,x3
-sw x6, 0(x4)
-jal x1, delay_1s
+addi x10,x10,1
+bne x11, x10, skip
+addi x10,x0,0
+skip:
+jal seven_seg_decode
+sb x6,0(x2)
+jal delay_1s
 j here
 
+# Function: seven_seg_decode
+# Input: a0 - Input value (0 to 15)
+# Output: Writes the corresponding bit pattern to a memory-mapped I/O register (0x10000000)
+seven_seg_decode:
+    # Check if a0 contains a valid value (0-F)
+    li      t0, 0           # Load immediate 0 into t0 for comparison
+    beq     a0, t0, display_0
+
+    li      t0, 1           # Check for 1
+    beq     a0, t0, display_1
+
+    li      t0, 2           # Check for 2
+    beq     a0, t0, display_2
+
+    li      t0, 3           # Check for 3
+    beq     a0, t0, display_3
+
+    li      t0, 4           # Check for 4
+    beq     a0, t0, display_4
+
+    li      t0, 5           # Check for 5
+    beq     a0, t0, display_5
+
+    li      t0, 6           # Check for 6
+    beq     a0, t0, display_6
+
+    li      t0, 7           # Check for 7
+    beq     a0, t0, display_7
+
+    li      t0, 8           # Check for 8
+    beq     a0, t0, display_8
+
+    li      t0, 9           # Check for 9
+    beq     a0, t0, display_9
+
+    li      t0, 10          # Check for A (10 in decimal)
+    beq     a0, t0, display_A
+
+    li      t0, 11          # Check for B (11 in decimal)
+    beq     a0, t0, display_B
+
+    li      t0, 12          # Check for C (12 in decimal)
+    beq     a0, t0, display_C
+
+    li      t0, 13          # Check for D (13 in decimal)
+    beq     a0, t0, display_D
+
+    li      t0, 14          # Check for E (14 in decimal)
+    beq     a0, t0, display_E
+
+    li      t0, 15          # Check for F (15 in decimal)
+    beq     a0, t0, display_F
+    
+    # If input is out of range, do nothing and return
+    jr ra
+
+# Define display patterns for each number (0-F)
+display_0:
+    li      t1, 0x81        # Bit pattern for '0'
+    jr ra
+
+display_1:
+    li      t1, 0x4F        # Bit pattern for '1'
+    jr ra
+
+display_2:
+    li      t1, 0x12        # Bit pattern for '2'
+    jr ra
+
+display_3:
+    li      t1, 0x06        # Bit pattern for '3'
+    jr ra
+
+display_4:
+    li      t1, 0x4C        # Bit pattern for '4'
+    jr ra
+
+display_5:
+    li      t1, 0x24        # Bit pattern for '5'
+    jr ra
+
+display_6:
+    li      t1, 0x20        # Bit pattern for '6'
+    jr ra
+
+display_7:
+    li      t1, 0x0F        # Bit pattern for '7'
+    jr ra
+
+display_8:
+    li      t1, 0x00        # Bit pattern for '8'
+    jr ra
+
+display_9:
+    li      t1, 0x04        # Bit pattern for '9'
+    jr ra
+
+display_A:
+    li      t1, 0x88        # Bit pattern for 'A'
+    jr ra
+
+display_B:
+    li      t1, 0x60        # Bit pattern for 'B'
+    jr ra
+
+display_C:
+    li      t1, 0x31        # Bit pattern for 'C'
+    jr ra
+
+display_D:
+    li      t1, 0x42        # Bit pattern for 'D'
+    jr ra
+
+display_E:
+    li      t1, 0x30        # Bit pattern for 'E'
+    jr ra
+
+display_F:
+    li      t1, 0x38        # Bit pattern for 'F'
+    jr ra
+
+# li x4, 0x7000
+# li x2, 0xAAAAAAAA
+# li x3, 0x55555555
+# here:
+# mv x6,x2
+# sw x6, 0(x4)
+# jal x1, delay_1s
+# mv x6,x3
+# sw x6, 0(x4)
+# jal x1, delay_1s
+# j here
+
 delay_1s:
-    li t0, 5    # Load 50 million into t0 (1 second delay for 50 MHz clock)
+    li t0, 25000000    # Load 50 million into t0 (1 second delay for 50 MHz clock)
 delay_loop:
     addi t0, t0, -1      # Decrement the counter
     bne t0, x0, delay_loop  # If t0 is not zero, branch back to delay_loop
