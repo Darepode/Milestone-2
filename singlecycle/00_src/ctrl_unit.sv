@@ -26,10 +26,10 @@ always @(*) begin
 		R_type      : begin
 					  if (!(func7 == 7'b0 || func7 == 7'b0100000)) begin
 						br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b0; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b00;
-					    l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
+					    l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
 					  end else begin
 						br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b00;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 					  end
 						case (func3)
 							3'b000: alu_op = (!func7[5]) ? 4'b0000 : 4'b0001;
@@ -44,7 +44,7 @@ always @(*) begin
 		end
 		I_type_IMM  : begin
 			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b00;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 					  case (func3)
 					    3'b000: alu_op = 4'b0000;
 						3'b010: alu_op = 4'b0010;
@@ -58,17 +58,17 @@ always @(*) begin
 		end
 		I_type_JALR : begin
 			          br_sel = 1'b1; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b10;
-					  alu_op = 4'b0000; l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  alu_op = 4'b0000; l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 		end
 		I_type_LD   : begin
 			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b01;
-					  alu_op = 4'b0000; s_length = 2'b0; l_length = func3; insn_vld = 1'b0;
+					  alu_op = 4'b0000; s_length = 2'b0; l_length = func3; insn_vld = 1'b1;
 					  if (func3 == 3'b100 || func3 == 3'b101) l_unsigned = 1'b1;
 					  else l_unsigned = 1'b0;
 		end
         B_type      : begin
                       /*br_sel = 1'b1;*/  rd_wren = 1'b0; mem_wren = 1'b0; op_a_sel = 1'b1; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b0000;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
                       case (func3)
 					    3'b000: begin   // beq
 							br_unsigned = 1'b0;
@@ -104,25 +104,25 @@ always @(*) begin
 		end
 		S_type      : begin
                       br_sel = 1'b0;  br_unsigned = 1'b0; rd_wren = 1'b0; mem_wren = 1'b1; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b0000;
-					  s_length = func3[1:0]; l_unsigned = 1'b0; l_length = 3'b0; insn_vld = 1'b0;
+					  s_length = func3[1:0]; l_unsigned = 1'b0; l_length = 3'b0; insn_vld = 1'b1;
 					  
 		end
 		J_type      : begin
                       br_sel = 1'b1;  br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b1; op_b_sel = 1'b1; wb_sel = 2'b10; alu_op = 4'b0000;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 		end
 		U_type_LUI  : begin
                       br_sel = 1'b0;  br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b1010;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 		end
 		U_type_AUIPC: begin
                       br_sel = 1'b0;  br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b1; op_b_sel = 1'b1; wb_sel = 2'b00; alu_op = 4'b0000;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
 		end
 		default: begin
 			br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b0; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b0; wb_sel = 2'b00;
 			l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b0;
-		 	insn_vld = 1'b1;
+		 	//insn_vld = 1'b1;
 		end
                     
 	endcase

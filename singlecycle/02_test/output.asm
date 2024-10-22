@@ -16,7 +16,7 @@ Disassembly of section .text:
 
 00000018 <skip>:
   18:	010000ef          	jal	28 <seven_seg_decode>
-  1c:	00610023          	sb	t1,0(sp)
+  1c:	00612023          	sw	t1,0(sp)
   20:	10c000ef          	jal	12c <delay_1s>
   24:	fe9ff06f          	j	c <here>
 

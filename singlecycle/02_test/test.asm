@@ -11,9 +11,9 @@ addi x10,x10,1
 bne x11, x10, skip
 addi x10,x0,0
 skip:
-jal seven_seg_decode
-sb x6,0(x2)
-jal delay_1s
+jal x1, seven_seg_decode
+sw x6,0(x2)
+jal x1, delay_1s
 j here
 
 # Function: seven_seg_decode
