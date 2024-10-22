@@ -7,13 +7,12 @@ li x2, 0x7020
 li x11, 16
 
 here:
+jal  x1, seven_seg_decode
+sb   x6,0(x2)
+jal  x1, delay_1s
 addi x10,x10,1
-bne x11, x10, skip
+bne  x11, x10, here
 addi x10,x0,0
-skip:
-jal x1, seven_seg_decode
-sw x6,0(x2)
-jal x1, delay_1s
 j here
 
 # Function: seven_seg_decode
@@ -74,35 +73,35 @@ seven_seg_decode:
 
 # Define display patterns for each number (0-F)
 display_0:
-    li      t1, 0x81        # Bit pattern for '0'
+    li      t1, 0x40        # Bit pattern for '0'
     jr ra
 
 display_1:
-    li      t1, 0x4F        # Bit pattern for '1'
+    li      t1, 0x79        # Bit pattern for '1'
     jr ra
 
 display_2:
-    li      t1, 0x12        # Bit pattern for '2'
+    li      t1, 0x24        # Bit pattern for '2'
     jr ra
 
 display_3:
-    li      t1, 0x06        # Bit pattern for '3'
+    li      t1, 0x30        # Bit pattern for '3'
     jr ra
 
 display_4:
-    li      t1, 0x4C        # Bit pattern for '4'
+    li      t1, 0x19        # Bit pattern for '4'
     jr ra
 
 display_5:
-    li      t1, 0x24        # Bit pattern for '5'
+    li      t1, 0x12        # Bit pattern for '5'
     jr ra
 
 display_6:
-    li      t1, 0x20        # Bit pattern for '6'
+    li      t1, 0x02        # Bit pattern for '6'
     jr ra
 
 display_7:
-    li      t1, 0x0F        # Bit pattern for '7'
+    li      t1, 0x78        # Bit pattern for '7'
     jr ra
 
 display_8:
@@ -110,31 +109,31 @@ display_8:
     jr ra
 
 display_9:
-    li      t1, 0x04        # Bit pattern for '9'
+    li      t1, 0x10        # Bit pattern for '9'
     jr ra
 
 display_A:
-    li      t1, 0x88        # Bit pattern for 'A'
+    li      t1, 0x08        # Bit pattern for 'A'
     jr ra
 
 display_B:
-    li      t1, 0x60        # Bit pattern for 'B'
+    li      t1, 0x03        # Bit pattern for 'B'
     jr ra
 
 display_C:
-    li      t1, 0x31        # Bit pattern for 'C'
+    li      t1, 0x46        # Bit pattern for 'C'
     jr ra
 
 display_D:
-    li      t1, 0x42        # Bit pattern for 'D'
+    li      t1, 0x21        # Bit pattern for 'D'
     jr ra
 
 display_E:
-    li      t1, 0x30        # Bit pattern for 'E'
+    li      t1, 0x06        # Bit pattern for 'E'
     jr ra
 
 display_F:
-    li      t1, 0x38        # Bit pattern for 'F'
+    li      t1, 0x0e        # Bit pattern for 'F'
     jr ra
 
 # li x4, 0x7000

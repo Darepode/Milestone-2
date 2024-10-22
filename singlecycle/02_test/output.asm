@@ -10,14 +10,12 @@ Disassembly of section .text:
    8:	01000593          	li	a1,16
 
 0000000c <here>:
-   c:	00150513          	addi	a0,a0,1
-  10:	00a59463          	bne	a1,a0,18 <skip>
-  14:	00000513          	li	a0,0
-
-00000018 <skip>:
-  18:	010000ef          	jal	28 <seven_seg_decode>
-  1c:	00612023          	sw	t1,0(sp)
-  20:	10c000ef          	jal	12c <delay_1s>
+   c:	01c000ef          	jal	28 <seven_seg_decode>
+  10:	00610023          	sb	t1,0(sp)
+  14:	118000ef          	jal	12c <delay_1s>
+  18:	00150513          	addi	a0,a0,1
+  1c:	fea598e3          	bne	a1,a0,c <here>
+  20:	00000513          	li	a0,0
   24:	fe9ff06f          	j	c <here>
 
 00000028 <seven_seg_decode>:
@@ -56,35 +54,35 @@ Disassembly of section .text:
   a8:	00008067          	ret
 
 000000ac <display_0>:
-  ac:	08100313          	li	t1,129
+  ac:	04000313          	li	t1,64
   b0:	00008067          	ret
 
 000000b4 <display_1>:
-  b4:	04f00313          	li	t1,79
+  b4:	07900313          	li	t1,121
   b8:	00008067          	ret
 
 000000bc <display_2>:
-  bc:	01200313          	li	t1,18
+  bc:	02400313          	li	t1,36
   c0:	00008067          	ret
 
 000000c4 <display_3>:
-  c4:	00600313          	li	t1,6
+  c4:	03000313          	li	t1,48
   c8:	00008067          	ret
 
 000000cc <display_4>:
-  cc:	04c00313          	li	t1,76
+  cc:	01900313          	li	t1,25
   d0:	00008067          	ret
 
 000000d4 <display_5>:
-  d4:	02400313          	li	t1,36
+  d4:	01200313          	li	t1,18
   d8:	00008067          	ret
 
 000000dc <display_6>:
-  dc:	02000313          	li	t1,32
+  dc:	00200313          	li	t1,2
   e0:	00008067          	ret
 
 000000e4 <display_7>:
-  e4:	00f00313          	li	t1,15
+  e4:	07800313          	li	t1,120
   e8:	00008067          	ret
 
 000000ec <display_8>:
@@ -92,31 +90,31 @@ Disassembly of section .text:
   f0:	00008067          	ret
 
 000000f4 <display_9>:
-  f4:	00400313          	li	t1,4
+  f4:	01000313          	li	t1,16
   f8:	00008067          	ret
 
 000000fc <display_A>:
-  fc:	08800313          	li	t1,136
+  fc:	00800313          	li	t1,8
  100:	00008067          	ret
 
 00000104 <display_B>:
- 104:	06000313          	li	t1,96
+ 104:	00300313          	li	t1,3
  108:	00008067          	ret
 
 0000010c <display_C>:
- 10c:	03100313          	li	t1,49
+ 10c:	04600313          	li	t1,70
  110:	00008067          	ret
 
 00000114 <display_D>:
- 114:	04200313          	li	t1,66
+ 114:	02100313          	li	t1,33
  118:	00008067          	ret
 
 0000011c <display_E>:
- 11c:	03000313          	li	t1,48
+ 11c:	00600313          	li	t1,6
  120:	00008067          	ret
 
 00000124 <display_F>:
- 124:	03800313          	li	t1,56
+ 124:	00e00313          	li	t1,14
  128:	00008067          	ret
 
 0000012c <delay_1s>:
