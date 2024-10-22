@@ -254,7 +254,7 @@ display_F:
     jr ra
 
 delay_10ms:
-    li t0, 1250000   # Load 50 million into t0 (1 second delay for 50 MHz clock)
+    li t0, 2 #1250000   # Load 50 million into t0 (1 second delay for 50 MHz clock)
 delay_loop:
     addi t0, t0, -1      # Decrement the counter
     bne t0, x0, delay_loop  # If t0 is not zero, branch back to delay_loop

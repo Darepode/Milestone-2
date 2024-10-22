@@ -6,7 +6,7 @@ Disassembly of section .text:
 
 00000000 <_start>:
    0:	00007137          	lui	sp,0x7
-   4:	02010113          	addi	sp,sp,32 # 7020 <delay_loop+0x6d58>
+   4:	02010113          	addi	sp,sp,32 # 7020 <delay_loop+0x6d5c>
    8:	00a00193          	li	gp,10
    c:	00a00213          	li	tp,10
   10:	00600393          	li	t2,6
@@ -219,10 +219,9 @@ Disassembly of section .text:
  2bc:	00008067          	ret
 
 000002c0 <delay_10ms>:
- 2c0:	001312b7          	lui	t0,0x131
- 2c4:	2d028293          	addi	t0,t0,720 # 1312d0 <delay_loop+0x131008>
+ 2c0:	00200293          	li	t0,2
 
-000002c8 <delay_loop>:
- 2c8:	fff28293          	addi	t0,t0,-1
- 2cc:	fe029ee3          	bnez	t0,2c8 <delay_loop>
- 2d0:	00008067          	ret
+000002c4 <delay_loop>:
+ 2c4:	fff28293          	addi	t0,t0,-1
+ 2c8:	fe029ee3          	bnez	t0,2c4 <delay_loop>
+ 2cc:	00008067          	ret

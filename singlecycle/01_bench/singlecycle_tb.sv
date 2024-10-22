@@ -131,7 +131,7 @@ singlecycle singlecycle_inst (
     initial begin
         $dumpfile("singlecycle_tb.vcd");
         $dumpvars(0,singlecycle_tb);
-        #1000 begin
+        #10000 begin
            $writememh("Mem_after.data", singlecycle_tb.singlecycle_inst.lsu_inst.data_mem);
            $writememh("Out_Mem_after.data", singlecycle_tb.singlecycle_inst.lsu_inst.output_mem);
            $writememh("In_Mem_after.data", singlecycle_tb.singlecycle_inst.lsu_inst.input_mem);

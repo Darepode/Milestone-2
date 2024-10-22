@@ -72,17 +72,17 @@ always @(*) begin
                       case (func3)
 					    3'b000: begin   // beq
 							br_unsigned = 1'b0;
-							if (br_equal & !br_less) br_sel = 1'b1;
+							if (br_equal) br_sel = 1'b1;
 							else br_sel = 1'b0;
 						end
 						3'b001: begin  //bne
 							br_unsigned = 1'b0;
-							if (!br_equal & !br_less) br_sel = 1'b1;
+							if (!br_equal) br_sel = 1'b1;
 							else br_sel = 1'b0;
 						end
 						3'b100: begin   //blt
 							br_unsigned = 1'b0;
-							if (!br_equal & br_less) br_sel = 1'b1;
+							if (br_less) br_sel = 1'b1;
 							else br_sel = 1'b0;
 						end
 						3'b101: begin   //bge
@@ -92,7 +92,7 @@ always @(*) begin
 						end
 						3'b110: begin   //bltu
 							br_unsigned = 1'b1;
-							if (!br_equal & br_less) br_sel = 1'b1;
+							if (br_less) br_sel = 1'b1;
 							else br_sel = 1'b0;
 						end
 						3'b111: begin   //bgeu
