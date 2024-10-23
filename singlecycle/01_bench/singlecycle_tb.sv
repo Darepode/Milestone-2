@@ -125,6 +125,8 @@ singlecycle singlecycle_inst (
     initial begin
         i_rst_n = 0;
         #10 i_rst_n = 1;
+
+
     end
 
     // Wave dump
@@ -145,7 +147,9 @@ singlecycle singlecycle_inst (
     // $display("BEGIN init mem");
     // $readmemh("../02_test/mem.dump", singlecycle_tb.singlecycle_inst.imem_inst.instr_mem);
     // $display("FINISH init mem");
-    #10; force singlecycle_tb.singlecycle_inst.i_io_sw = 32'hDEADBEEF;
+
+    #10; force singlecycle_tb.singlecycle_inst.i_io_btn = 4'b1000;
+    #500; force singlecycle_tb.singlecycle_inst.i_io_btn = 4'b0000;
     // #20; release singlecycle_tb.singlecycle_inst.i_io_sw;
     end
 

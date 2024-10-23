@@ -3,18 +3,28 @@
 
 _start:
 
-li x2, 0x7020  # Address for first HEX, each HEX add 1
+addi x0, x0, 0
+addi x0, x0, 0
+addi x0, x0, 0
+
+# LCD
+# li x3, 0x7030
+# li x4, 0xC0000000
+# sw x4, 0(x3)
+
 li x3, 10 # check value
 li x4, 10 # check value
 li x7, 6 
 li x20, 0 # HEX 0
-li x21, 1 # HEX 1
-li x22, 2 # HEX 2
-li x23, 3 # HEX 3
-li x24, 4 # HEX 4
-li x25, 5 # HEX 5
-li x26, 6 # HEX 6
-li x27, 7 # HEX 7
+li x21, 0 # HEX 1
+li x22, 0 # HEX 2
+li x23, 0 # HEX 3
+li x24, 0 # HEX 4
+li x25, 0 # HEX 5
+li x26, 0 # HEX 6
+li x27, 0 # HEX 7
+li x2, 0x7020  # Address for first HEX, each HEX add 1
+li x8, 0x7810
 
 mv x10, x20
 jal ra, seven_seg_decode
@@ -49,6 +59,11 @@ jal ra, seven_seg_decode
 sb x6, 7(x2) # HEX 7
 
 here:
+lb   x11, 0(x8)        # Load the value at the address 0x7810 (button status) into x5
+andi x12, x11, 8        # Check if the least significant bit (button status) is set
+bne x12, x0, skip
+jal ra, stop
+skip:
 mv x10, x20
 jal ra, seven_seg_decode
 sb x6, 0(x2)
@@ -131,6 +146,39 @@ mv x10, x27
 jal ra, seven_seg_decode
 sb x6, 7(x2)
 j here
+
+stop:
+    mv x14, x1
+    li x13,0
+P_WAIT: 
+    lb   x11, 0(x8)        # Load the value at the address 0x8810 (button status) into x11
+    andi x12, x11, 8        # Check if the least significant bit (button status) is set
+    bne  x12, x0, P_WAIT   # If button is not pressed (bit is 0), branch back to WAIT
+
+    # sw   x2, 0(x3)
+    jal  x1, delay_10ms   # Call the 20ms delay routine
+    jal  x1, delay_10ms   # Call the 20ms delay routine
+
+    lb   x11, 0(x8)        # Check the button status again
+    andi x12, x11, 8        # Check if the least significant bit is set
+    bne  x12, x0, P_WAIT   # If button is released (bit is 0), go back to WAIT
+
+R_WAIT:
+    lb   x11, 0(x8)        # Load the value at the address 0x8810 (button status) into x11
+    andi x12, x11, 8        # Check if the least significant bit (button status) is set
+    beq  x12, x0, R_WAIT   # If button is not pressed (bit is 1), branch back to WAIT
+
+    jal  x1, delay_10ms   # Call the 20ms delay routine
+    jal  x1, delay_10ms   # Call the 20ms delay routine
+
+    lb   x11, 0(x8)        # Check the button status again
+    andi x12, x11, 8        # Check if the least significant bit is set
+    beq  x12, x0, R_WAIT   # If button is still not pressed, go back to WAIT
+    bne x13,x0, run
+    addi x13, x13, 1
+    j P_WAIT
+    run:
+    jalr x0, x14, 0
 
 # Function: seven_seg_decode (exclude x10, x5, x6)
 # Input: a0 - Input value (0 to 15)
@@ -254,7 +302,7 @@ display_F:
     jr ra
 
 delay_10ms:
-    li t0, 2 #1250000   # Load 50 million into t0 (1 second delay for 50 MHz clock)
+    li t0, 125000   # Load 50 million into t0 (1 second delay for 50 MHz clock)
 delay_loop:
     addi t0, t0, -1      # Decrement the counter
     bne t0, x0, delay_loop  # If t0 is not zero, branch back to delay_loop
