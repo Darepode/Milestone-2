@@ -84,7 +84,7 @@ _start:
 here:
     j    here
 
----------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 # Using x2 x3 x4 x5 x6 x7
 init_lcd:
     addi x6, x1, 0           # Save return address
@@ -115,7 +115,7 @@ init_lcd:
 
     addi x1, x6, 0           # Restore return address
     jalr x0,x1,0             # Return from the function
----------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 # Using x2 x3 x4 x5 x6 x7
 power_reset_lcd:
     addi x6, x1, 0           # Save return address
@@ -146,7 +146,7 @@ power_reset_lcd:
 
     addi x1, x6, 0           # Restore return address
     jalr x0,x1,0             # Return from the function
----------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 # Using x2 x3 x4 x7
 # Input x3 = 8-bit command/data; x4 = RS ( Command = 0, Data = 1 )
 out_lcd:
@@ -158,14 +158,15 @@ out_lcd:
 command:
     addi x3, x3, 1024        # ( RS = 0; EN = 1 ) + Command
 send:
-    sb   x3, 0(x2)
+    sh   x3, 0(x2)
     li   x3, 624             # Delay 100us
     jal  x1, delay
-    sb   x0, 1(x2)           # Pull EN to low for LCD starts executing
+    sh   x0, 1(x2)           # Pull EN to low for LCD starts executing
     addi x1, x7, 0           # Restore return address
     jalr x0,x1,0             # Return from the function
----------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 # Using x3 x5
+#CLOCK = 12 500 000Hz
 delay:
     # 20ms  = 124 999
     # 4.2ms =  26 249
