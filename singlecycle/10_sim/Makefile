@@ -1,6 +1,6 @@
 .PHONY: comp sim wave run
 
-TEST_NAME=application
+TEST_NAME=RAM
 
 comp:
 	iverilog -g2012 -s singlecycle_tb -o singlecycle_tb.vvp -c Filelist.f

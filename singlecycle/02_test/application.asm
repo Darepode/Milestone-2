@@ -61,11 +61,18 @@ init_lcd:
     jal  x1, out_lcd         # Write to LCD
     li   x3, 624             # Delay 100us
     jal  x1, delay
+
+    li   x4, 0               # Write command RS = 0
+    li   x3, 0x82            # Command content
+    jal  x1, out_lcd         # Write to LCD
+    li   x3, 624             # Delay 100us
+    jal  x1, delay
+
     j    init_prog
 
 #---------------------------------------------------------------------------
 # Using x2 x3 x7 x30
-# Input x3 = 8-bit command/data; x4 = RS ( Command = 0, Data = 1 )
+# Input x3 = 8-bit command/data; x30 = RS ( Command = 0, Data = 1 )
 out_lcd:
     addi x7, x1, 0           # Save return address
     li   x2, 0x7030          # Address of LCD
@@ -178,8 +185,15 @@ R_WAIT1:
     li   x3, 624            # Delay 100us
     jal  x1, delay
 
-    li   x30, 0
+    bne  x31, x0, row2
     li   x3, 0x82           # Command content
+    li   x31, 1
+    j    movecur
+row2:
+    li   x3, 0xC2           # Command content
+    li   x31, 0
+movecur:
+    li   x30, 0
     jal  x1, out_lcd        # Write to LCD
     li   x3, 624            # Delay 100us
     jal  x1, delay
@@ -206,6 +220,7 @@ init_prog:
     li x19, 48
     li x28, 48
     li x29, 48
+    li x31, 1  # Cursor flag
     
     li   x2, 0x7020  # Address for first HEX, each HEX add 1
     li   x8, 0x7810
@@ -242,13 +257,13 @@ init_prog:
     jal  ra, seven_seg_decode
     sb   x6, 7(x2) # HEX 7
 
-    here:
+here:
     lb   x11, 0(x8)         # Load the value at the address 0x7810 (button status) into x5
     andi x12, x11, 8        # Check if the least significant bit (button status) is set
     bne  x12, x0, check1
     jal  ra, stop
 
-    check1:
+check1:
     lb   x11, 0(x8)         # Load the value at the address 0x7810 (button status) into x5
     andi x12, x11, 4        # Check if the least significant bit (button status) is set
     bne  x12, x0, skip
@@ -387,7 +402,7 @@ R_WAIT:
     bne  x13, x0, run
     addi x13, x13, 1
     j    P_WAIT
-    run:
+run:
     jalr x0, x14, 0
 
 
