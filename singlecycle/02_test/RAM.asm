@@ -7,14 +7,14 @@ _start:
     li x7, 0x2110
 
 loop:
-    li x2, 0xaaaaaaaa
+    li x2, 0x0000FFFF
     sw x2, 0(x3)
     lw x6, 0(x3)
     sw x6, 0(x4)
 
     jal x1, delay_1s
 
-    li x2, 0x55555555
+    li x2, 0xFFFF0000
     sw x2, 0(x7)
     lw x6, 0(x7)
     sw x6, 0(x4)

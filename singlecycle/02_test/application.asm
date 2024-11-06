@@ -88,6 +88,7 @@ send:
     sh   x0, 1(x2)           # Pull EN to low for LCD starts executing
     addi x1, x7, 0           # Restore return address
     li   x3, 10
+    li   x4, 10
     li   x7, 6
     li   x2, 0x7020
     jalr x0,x1,0             # Return from the function
@@ -223,7 +224,7 @@ init_prog:
     li x31, 1  # Cursor flag
     
     li   x2, 0x7020  # Address for first HEX, each HEX add 1
-    li   x8, 0x7810
+    li   x8, 0x7810  # Address of Buttons
 
     mv   x10, x20
     jal  ra, seven_seg_decode
@@ -256,6 +257,8 @@ init_prog:
     mv   x10, x27
     jal  ra, seven_seg_decode
     sb   x6, 7(x2) # HEX 7
+
+    jal  x14, init_start
 
 here:
     lb   x11, 0(x8)         # Load the value at the address 0x7810 (button status) into x5
@@ -371,13 +374,17 @@ skip:
     jal  ra, seven_seg_decode
     sb   x6, 7(x2)
     j    here
-
+#------------------------------------------------------------------------------------------
 stop:
     mv   x14, x1
     li   x13, 0
 P_WAIT: 
     lb   x11, 0(x8)         # Load the value at the address 0x8810 (button status) into x11
-    andi x12, x11, 8        # Check if the least significant bit (button status) is set
+    andi x12, x11, 2        # Check if the button 1 is pressed
+    bne  x12, x0, cont
+    jal  ra , reset
+cont:
+    andi x12, x11, 8        # Check if the button 3 is pressed
     bne  x12, x0, P_WAIT    # If button is not pressed (bit is 0), branch back to WAIT
 
     # sw   x2, 0(x3)
@@ -399,13 +406,111 @@ R_WAIT:
     lb   x11, 0(x8)         # Check the button status again
     andi x12, x11, 8        # Check if the least significant bit is set
     beq  x12, x0, R_WAIT    # If button is still not pressed, go back to WAIT
+
+init_start:
     bne  x13, x0, run
     addi x13, x13, 1
     j    P_WAIT
 run:
     jalr x0, x14, 0
+#------------------------------------------------------------------------------------------
+reset:
+    li   x2, 0x2100
+    sw   x1, 0(x2)
+P_WAIT2: 
+    lb   x11, 0(x8)         # Load the value at the address 0x8810 (button status) into x11
+    andi x12, x11, 2        # Check if the least significant bit (button status) is set
+    bne  x12, x0, P_WAIT2   # If button is not pressed (bit is 0), branch back to WAIT
 
+    # sw   x2, 0(x3)
+    jal  x1, delay_10ms     # Call the 20ms delay routine
+    jal  x1, delay_10ms     # Call the 20ms delay routine
 
+    lb   x11, 0(x8)         # Check the button status again
+    andi x12, x11, 2        # Check if the least significant bit is set
+    bne  x12, x0, P_WAIT2   # If button is released (bit is 0), go back to WAIT
+
+R_WAIT2:
+    lb   x11, 0(x8)         # Load the value at the address 0x8810 (button status) into x11
+    andi x12, x11, 2        # Check if the least significant bit (button status) is set
+    beq  x12, x0, R_WAIT2   # If button is not pressed (bit is 1), branch back to WAIT
+
+    jal  x1, delay_10ms     # Call the 20ms delay routine
+    jal  x1, delay_10ms     # Call the 20ms delay routine
+
+    lb   x11, 0(x8)         # Check the button status again
+    andi x12, x11, 2        # Check if the least significant bit is set
+    beq  x12, x0, R_WAIT2   # If button is still not pressed, go back to WAIT
+
+    li x20, 0  # HEX 0
+    li x21, 0  # HEX 1
+    li x22, 0  # HEX 2
+    li x23, 0  # HEX 3
+    li x24, 0  # HEX 4
+    li x25, 0  # HEX 5
+    li x26, 0  # HEX 6
+    li x27, 0  # HEX 7
+
+    li   x2, 0x7020
+    mv   x10, x20
+    jal  ra, seven_seg_decode
+    sb   x6, 0(x2) # HEX 0
+
+    mv   x10, x21
+    jal  ra, seven_seg_decode
+    sb   x6, 1(x2) # HEX 1
+
+    mv   x10, x22
+    jal  ra, seven_seg_decode
+    sb   x6, 2(x2) # HEX 2
+
+    mv   x10, x23
+    jal  ra, seven_seg_decode
+    sb   x6, 3(x2) # HEX 3
+
+    mv   x10, x24
+    jal  ra, seven_seg_decode
+    sb   x6, 4(x2) # HEX 4
+
+    mv   x10, x25
+    jal  ra, seven_seg_decode
+    sb   x6, 5(x2) # HEX 5
+
+    mv   x10, x26
+    jal  ra, seven_seg_decode
+    sb   x6, 6(x2) # HEX 6
+
+    mv   x10, x27
+    jal  ra, seven_seg_decode
+    sb   x6, 7(x2) # HEX 7
+
+    li   x4, 0               # Write command RS = 0
+    li   x3, 0x01            # Command content
+    jal  x1, out_lcd         # Write to LCD
+    li   x3, 12499           # Delay 2ms
+    jal  x1, delay
+
+    li   x4, 0               # Write command RS = 0
+    li   x3, 0x82            # Command content
+    jal  x1, out_lcd         # Write to LCD
+    li   x3, 624             # Delay 100us
+    jal  x1, delay
+
+    li x9,  48
+    li x15, 48
+    li x16, 48
+    li x17, 48
+    li x18, 48
+    li x19, 48
+    li x28, 48
+    li x29, 48
+    li x31, 1  # Cursor flag
+
+    li   x2, 0x2100
+    lw   x1, 0(x2)
+    li   x2, 0x7020
+    jalr x0, x1, 0
+#------------------------------------------------------------------------------------------
 # Function: seven_seg_decode (exclude x10, x5, x6)
 # Input: a0 - Input value (0 to 15)
 # Output: Writes the corresponding bit pattern to a memory-mapped I/O register (0x10000000)
@@ -545,7 +650,7 @@ dloop:
 #--------------------------------------------------------------------------------
 # CLOCK = 12 500 000Hz
 delay_10ms:
-    li   t0, 125000          
+    li   t0, 62500          
 delay_loop:
     addi t0, t0, -1          # Decrement the counter
     bne  t0, x0, delay_loop  # If t0 is not zero, branch back to delay_loop
