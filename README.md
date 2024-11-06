@@ -5,7 +5,11 @@
 >https://drive.google.com/drive/folders/11YV9bqOE44pIyt_7uzh9uudnhMhNMt9u
 
 # Demonstration Video
->[![Demo](https://img.youtube.com/vi/q0suqnxl2Yo/0.jpg)](https://www.youtube.com/watch?v=q0suqnxl2Yo)
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=q0suqnxl2Yo">
+    <img src="https://img.youtube.com/vi/q0suqnxl2Yo/0.jpg" alt="Centered Image" width="300"/>
+  </a>
+</div>
 
 # Git in WSL Guide
 
@@ -34,8 +38,9 @@ git --version
 After that create a new repository on GitHub, clone that repository to your Windows host.
 Follow step in section 2.1 to make changes in this local repo.
 When you reach the step to push the code, a GitHub login window will appear as shown below:
-
-![](https://i.sstatic.net/xFWKt4fi.png)
+<div align="center">
+  <img src="https://i.sstatic.net/xFWKt4fi.png" alt="Centered Image" width="400"/>
+</div>
 
 Choose Sign in with your browser, sign in GitHub account and changes are updated to GitHub.
 
