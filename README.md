@@ -1,3 +1,9 @@
+# Quartus Project's Drive
+>https://drive.google.com/drive/folders/11YV9bqOE44pIyt_7uzh9uudnhMhNMt9u
+
+# Report on Overleaf
+>https://www.overleaf.com/project/6718b0e07d03821d876d5d55
+
 # Git in WSL Guide
 
 ## Table of Contents
