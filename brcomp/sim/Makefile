@@ -7,7 +7,7 @@ sim:
 	vvp brcomp_tb.vvp
 
 wave:
-	gtkwave brcomp_tb.vcd
+	gtkwave tb.vcd
 
 run:
 	make comp && make sim

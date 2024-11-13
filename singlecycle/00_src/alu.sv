@@ -3,14 +3,14 @@ module alu (
     input  [3:0]  i_alu_op,
     output [31:0] o_alu_data
 );
-logic [31:0] temp,temp_sll,temp_srl,temp_sra;
+logic [31:0] temp,temp_sll,temp_srl,temp_sra, not_b;
 logic [31:0] alu_temp;
 logic [0:0]  carry, overflow, signed_lt, unsigned_lt;
-
-assign {carry,temp} = i_operand_a + ~i_operand_b + 32'h1;
+assign not_b = ~i_operand_b;
+assign {carry,temp} = i_operand_a + not_b + 32'h1;
 assign overflow     = (i_operand_a[31] ^ i_operand_b[31]) & (i_operand_a[31] ^ temp[31]);
 assign signed_lt    = temp[31] ^ overflow;
-assign unsigned_lt  = carry;
+assign unsigned_lt  = ~carry;
 
 sll u1(
     .i_operand_a(i_operand_a),

@@ -43,12 +43,12 @@ module alu_tb ();
             if (alu_data != expected_data)
                 $fdisplay(fd," => ERROR on %s !!! ",op_string);
             if ($time > 10000) begin
-                operand_a = 32'd4218972406;// 32'hA5FFFFFF; 
-                operand_b = 32'h00000009; //9        
-                alu_op = 4'h9;  //4294818868
+                operand_a = 32'd1;// 32'hA5FFFFFF; 
+                operand_b = 32'h2; //9        
+                alu_op = 4'h3;  //4294818868
                 expected_gen(operand_a,operand_b,alu_op,expected_data,op_string);
                 #5
-                $display("At %0t on op %s, a = %h, b = %h, DUT_data = %h, Expected_data = %h",$time,op_string, operand_a, operand_b,alu_data,expected_data);
+                $display("At %0t on op %s, a = %h, b = %h, DUT_data = %h, Expected_data = %h, carry = %0d, temp = %0h",$time,op_string, inst_alu.i_operand_a, inst_alu.i_operand_b,alu_data,expected_data,inst_alu.carry, inst_alu.temp);
                 operand_a = 32'd18972406;
                 operand_b = -32'd32464538;       
                 alu_op = 4'h2; 

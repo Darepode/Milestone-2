@@ -1,0 +1,71 @@
+#! /opt/oss-cad-suite/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1560-g899d45923)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/opt/oss-cad-suite/lib/ivl/system.vpi";
+:vpi_module "/opt/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/oss-cad-suite/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/oss-cad-suite/lib/ivl/va_math.vpi";
+:vpi_module "/opt/oss-cad-suite/lib/ivl/v2009.vpi";
+S_0x555580b66b80 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x555580b78250 .scope module, "adder_tb" "adder_tb" 3 3;
+ .timescale -9 -12;
+v0x555580b8c640_0 .net "adder_data", 31 0, L_0x555580b8cc40;  1 drivers
+v0x555580b8c720_0 .net "carry", 0 0, L_0x555580b8cb50;  1 drivers
+v0x555580b8c7f0_0 .var "operand_a", 31 0;
+v0x555580b8c8f0_0 .var "operand_b", 31 0;
+S_0x555580b783e0 .scope module, "inst_adder" "adder" 3 8, 4 1 0, S_0x555580b78250;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 32 "operand_a";
+    .port_info 1 /INPUT 32 "operand_b";
+    .port_info 2 /OUTPUT 32 "adder_data";
+    .port_info 3 /OUTPUT 1 "carry";
+L_0x555580b8c9c0 .functor NOT 32, v0x555580b8c8f0_0, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>;
+v0x555580b3ea10_0 .net *"_ivl_0", 31 0, L_0x555580b8c9c0;  1 drivers
+L_0x7f2d09908018 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x555580b8bb20_0 .net *"_ivl_10", 0 0, L_0x7f2d09908018;  1 drivers
+v0x555580b8bc00_0 .net *"_ivl_11", 32 0, L_0x555580b8cef0;  1 drivers
+L_0x7f2d09908060 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x555580b8bcf0_0 .net *"_ivl_14", 31 0, L_0x7f2d09908060;  1 drivers
+v0x555580b8bdd0_0 .net *"_ivl_15", 32 0, L_0x555580b9d040;  1 drivers
+L_0x7f2d099080a8 .functor BUFT 1, C4<000000000000000000000000000000001>, C4<0>, C4<0>, C4<0>;
+v0x555580b8bf00_0 .net/2u *"_ivl_17", 32 0, L_0x7f2d099080a8;  1 drivers
+v0x555580b8bfe0_0 .net *"_ivl_19", 32 0, L_0x555580b9d230;  1 drivers
+v0x555580b8c0c0_0 .net *"_ivl_7", 32 0, L_0x555580b8cd80;  1 drivers
+v0x555580b8c1a0_0 .net "adder_data", 31 0, L_0x555580b8cc40;  alias, 1 drivers
+v0x555580b8c280_0 .net "carry", 0 0, L_0x555580b8cb50;  alias, 1 drivers
+v0x555580b8c340_0 .net "not_b", 0 0, L_0x555580b8ca60;  1 drivers
+v0x555580b8c400_0 .net "operand_a", 31 0, v0x555580b8c7f0_0;  1 drivers
+v0x555580b8c4e0_0 .net "operand_b", 31 0, v0x555580b8c8f0_0;  1 drivers
+L_0x555580b8ca60 .part L_0x555580b8c9c0, 0, 1;
+L_0x555580b8cb50 .part L_0x555580b9d230, 32, 1;
+L_0x555580b8cc40 .part L_0x555580b9d230, 0, 32;
+L_0x555580b8cd80 .concat [ 32 1 0 0], v0x555580b8c7f0_0, L_0x7f2d09908018;
+L_0x555580b8cef0 .concat [ 1 32 0 0], L_0x555580b8ca60, L_0x7f2d09908060;
+L_0x555580b9d040 .arith/sum 33, L_0x555580b8cd80, L_0x555580b8cef0;
+L_0x555580b9d230 .arith/sum 33, L_0x555580b9d040, L_0x7f2d099080a8;
+    .scope S_0x555580b78250;
+T_0 ;
+    %vpi_call/w 3 17 "$dumpfile", "adder_tb.vcd" {0 0 0};
+    %vpi_call/w 3 18 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x555580b78250 {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x555580b78250;
+T_1 ;
+    %pushi/vec4 1, 0, 32;
+    %store/vec4 v0x555580b8c7f0_0, 0, 32;
+    %pushi/vec4 2, 0, 32;
+    %store/vec4 v0x555580b8c8f0_0, 0, 32;
+    %delay 10000, 0;
+    %vpi_call/w 3 31 "$display", "carry: %0d", v0x555580b8c720_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "adder_tb.sv";
+    "./adder.sv";

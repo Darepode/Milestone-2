@@ -1,4 +1,5 @@
 `timescale 1ns/1ps
+`include "adder.sv"
 module adder_tb ();
     logic [31:0] operand_a, operand_b;
     logic [31:0] adder_data;
@@ -24,8 +25,8 @@ module adder_tb ();
     // end
 
     initial begin
-        operand_a = 32'h1;
-        operand_b = 32'h2;
+        operand_a = 32'd1;
+        operand_b = 32'd2;
         #10;
         $display("carry: %0d", carry);
     end
