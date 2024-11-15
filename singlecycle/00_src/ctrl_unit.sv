@@ -44,16 +44,50 @@ always @(*) begin
 		end
 		I_type_IMM  : begin
 			          br_sel = 1'b0; br_unsigned = 1'b0; rd_wren = 1'b1; mem_wren = 1'b0; op_a_sel = 1'b0; op_b_sel = 1'b1; wb_sel = 2'b00;
-					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; insn_vld = 1'b1;
+					  l_unsigned = 1'b0; l_length = 3'b0; s_length = 2'b0; //insn_vld = 1'b1;
 					  case (func3)
-					    3'b000: alu_op = 4'b0000;
-						3'b010: alu_op = 4'b0010;
-						3'b011: alu_op = 4'b0011;
-						3'b100: alu_op = 4'b0100;
-						3'b110: alu_op = 4'b0101;
-						3'b111: alu_op = 4'b0110;
-						3'b001: alu_op = 4'b0111;
-						3'b101: alu_op = (!func7[5]) ? 4'b1000 : 4'b1001;
+					    3'b000: begin
+							alu_op = 4'b0000;
+							insn_vld = 1'b1;
+						end
+						3'b010: begin
+							alu_op = 4'b0010;
+							insn_vld = 1'b1;
+						end
+						3'b011: begin
+							alu_op = 4'b0011;
+							insn_vld = 1'b1;
+						end
+						3'b100: begin
+							alu_op = 4'b0100;
+							insn_vld = 1'b1;
+						end
+						3'b110: begin
+							alu_op = 4'b0101;
+							insn_vld = 1'b1;
+						end
+						3'b111: begin
+							alu_op = 4'b0110;
+							insn_vld = 1'b1;
+						end
+						3'b001: begin
+							if (!(func7 == 7'b0 || func7 == 7'b0100000)) begin
+								alu_op = 4'b0000;
+								insn_vld = 1'b0;
+							end else begin
+								alu_op = 4'b0111;
+								insn_vld = 1'b0;
+							end
+						end
+						3'b101: begin
+							if (!(func7 == 7'b0 || func7 == 7'b0100000)) begin
+								alu_op = 4'b0000;
+								insn_vld = 1'b0;
+							end else begin
+								alu_op = (!func7[5]) ? 4'b1000 : 4'b1001;
+								insn_vld = 1'b1;
+							end
+						end
 					  endcase
 		end
 		I_type_JALR : begin

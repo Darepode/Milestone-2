@@ -126,11 +126,11 @@ module lsu (
             for (integer i = 0; i < 32; i = i+1) input_mem[i] <= 8'h00;
         end else begin
             {input_mem[5'b0_0000+5'h3], input_mem[5'b0_0000+5'h2], input_mem[5'b0_0000+5'h1], input_mem[5'b0_0000]} <= i_io_sw;
-            input_mem[5'b1_0000] <= {4'b0, i_io_btn};
+            input_mem[5'b1_0000] <= i_io_btn[7:0];
         end
     end
     // Output of input_mem
-    assign input_mem_out = {input_mem[input_mem_addr+6'h3], input_mem[input_mem_addr+6'h2], input_mem[input_mem_addr+6'h1], input_mem[input_mem_addr]};
+    assign input_mem_out = {input_mem[input_mem_addr+5'h3], input_mem[input_mem_addr+5'h2], input_mem[input_mem_addr+5'h1], input_mem[input_mem_addr]};
 
 
 endmodule
